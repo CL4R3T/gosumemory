@@ -282,13 +282,14 @@ func GetData() {
 					}
 					memory.MenuData.Bm.Stats.BeatmapSR = cast.ToFloat32(fmt.Sprintf("%.2f", float32(maniaSR)))
 					memory.MenuData.Bm.Stats.FullSR = memory.MenuData.Bm.Stats.BeatmapSR
-					memory.MenuData.PP.PpSS = int32(calculateManiaPPMax(maniaSR, maniaHitObjects)) // LiveSR not implemented yet
+					memory.MenuData.PP.PpSS = int32(calculateManiaPPMax(maniaSR)) // LiveSR not implemented yet
 				}
 			}
 			if memory.GameplayData.GameMode == 3 {
 				if maniaSR > 0 {
-					memory.GameplayData.PP.PPifFC = int32(calculateManiaPPMax(maniaSR, maniaHitObjects)) //PP if SS
-					memory.GameplayData.PP.Pp = int32(calculateManiaPP(maniaSR, maniaHitObjects, memory.GameplayData.Hits.HGeki, memory.GameplayData.Hits.H300, memory.GameplayData.Hits.HKatu, memory.GameplayData.Hits.H100, memory.GameplayData.Hits.H50))
+					// Something about maniaHitObjects seems to be broken, so this algorithm is not accruate on beatmap which has less than 1500 objects.
+					memory.GameplayData.PP.PPifFC = int32(calculateManiaPPMax(maniaSR)) //PP if SS
+					memory.GameplayData.PP.Pp = int32(calculateManiaPP(maniaSR, memory.GameplayData.Hits.HGeki, memory.GameplayData.Hits.H300, memory.GameplayData.Hits.HKatu, memory.GameplayData.Hits.H100, memory.GameplayData.Hits.H50,  memory.GameplayData.Hits.H0))
 				}
 			}
 		}
