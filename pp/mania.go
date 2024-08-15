@@ -6,7 +6,7 @@ import (
 
 func calculateManiaPP(stars float64, hit300g int16, hit300 int16, hit200 int16, hit100 int16, hit50 int16, hitMiss int16) float64 {
 	noteCount := hit300g+hit300+hit200+hit100+hit50+hitMiss
-	PP := 0
+	PP := 0.0
 	if noteCount == 0{
 		accPP := (320*float64(hit300g)+300*float64(hit300)+200*float64(hit200)+100*float64(hit100)+50*float64(hit50))/(320*float64(noteCount))
 		PPMax := calculateManiaPPMax(stars)
