@@ -2,7 +2,6 @@ package pp
 
 import (
 	"math"
-	"fmt"
 )
 
 func calculateManiaPP(stars float64, hit300g int16, hit300 int16, hit200 int16, hit100 int16, hit50 int16, hitMiss int16) float64 {
