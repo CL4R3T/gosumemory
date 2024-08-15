@@ -4,27 +4,12 @@ import (
 	"math"
 )
 
-func calculateManiaPP(od float64, stars float64, noteCount float64, score float64) float64 {
+func calculateManiaPP(stars float64, noteCount float64, hit300g int32, hit300 int32, hit200 int32, hit100 int32, hit50 int32, hitMiss int32) float64 {
+	PPMax = calculateManiaPPMax(stars, noteCount)
+	accPP = float64((320*hit300g+300*hit300+200*hit200+100*hit100+50*hit50))/(320*noteCount)
+	return PPMax*math.Max((accPP-0.8),0)*5
+}
 
-	//var strainStep := 400 * timeScale
-	hit300Window := 34 + 3*(math.Min(10, math.Max(0, 10-od)))
-	strainValue := math.Pow(5*math.Max(1, stars/0.2)-4, 2.2) / 135 * (1 + 0.1*math.Min(1, noteCount/1500))
-	//if score <= 500000 {
-	//	strainValue = 0
-	//}
-	if score <= 600000 {
-		strainValue *= (score - 500000) / 100000 * 0.3
-	} else if score <= 700000 {
-		strainValue *= 0.3 + (score-600000)/100000*0.25
-	} else if score <= 800000 {
-		strainValue *= 0.55 + (score-700000)/100000*0.20
-	} else if score <= 900000 {
-		strainValue *= 0.75 + (score-800000)/100000*0.15
-	} else {
-		strainValue *= 0.9 + (score-900000)/100000*0.1
-	}
-	accValue := math.Max(0, 0.2-((hit300Window-34)*0.006667)) * strainValue * math.Pow(math.Max(0, score-960000)/40000, 1.1)
-	ppMultiplier := 0.8
-
-	return math.Pow(math.Pow(strainValue, 1.1)+math.Pow(accValue, 1.1), 1/1.1) * ppMultiplier
+func calculateManiaPPMax (stars float64, noteCount float64) float64 {
+	return math.Pow(math.Max(stars-0.15,0.05),2.2)*(1+0.1*math.Min(1,noteCount/1500))*8
 }
